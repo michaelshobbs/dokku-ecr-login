@@ -1,0 +1,6 @@
+[plugin]
+name = "dokku-ecr-login
+description = "Ensure ecr login is up-to-date on deploy"
+version = "0.1.0"
+website_url = "https://github.com/michaelshobbs/dokku-ecr-login"
+[plugin.config]

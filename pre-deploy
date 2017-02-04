@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+# shellcheck disable=SC1090
+source "$PLUGIN_CORE_AVAILABLE_PATH/config/functions"
+
+dokku_ecr_login_pre_deploy_trigger() {
+  local desc="dokku app user pre-deploy trigger"
+  local APP="$1"; local IMAGE_TAG="$2"; local IMAGE; local DOCKER_ARGS
+  IMAGE=$(get_app_image_name "$APP" "$IMAGE_TAG")
+
+  AWS_ACCESS_KEY_ID=$(config_get "$APP" AWS_ACCESS_KEY_ID || true)
+  AWS_SECRET_ACCESS_KEY=$(config_get "$APP" AWS_SECRET_ACCESS_KEY || true)
+
+  if [[ -n "$AWS_ACCESS_KEY_ID" ]] && [[ -n "$AWS_SECRET_ACCESS_KEY" ]]; then
+    dokku_log_info1_quiet "performing ecr get-login"
+    $(aws ecr get-login)
+  fi
+}
+
+dokku_ecr_login_pre_deploy_trigger "$@"

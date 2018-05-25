@@ -14,7 +14,7 @@ dokku_ecr_login_pre_deploy_trigger() {
   if [[ -n "$AWS_ACCESS_KEY_ID" ]] && [[ -n "$AWS_SECRET_ACCESS_KEY" ]]; then
     dokku_log_info1_quiet "performing ecr get-login"
     # shellcheck disable=SC2091
-    $(aws ecr get-login)
+    $(aws ecr get-login --no-include-email)
   fi
 }
 

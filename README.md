@@ -4,7 +4,7 @@ dokku-ecr-login is a plugin for [dokku][dokku] that makes sure the instance's AW
 
 ## Requirements
 
-This plugin uses the `pre-deploy` hook to grab `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` in order to execute `$(aws ecr get-login)`. Also requires `aws` CLI.
+This plugin uses the `pre-deploy` hook to grab `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` in order to execute `$(aws ecr get-login)`. Also requires `aws` CLI version >= 1.11.0.
 
 ## Installation & Example
 

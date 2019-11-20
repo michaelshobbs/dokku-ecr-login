@@ -8,13 +8,19 @@ dokku_ecr_login_pre_deploy_trigger() {
   local APP="$1"; local IMAGE_TAG="$2"; local IMAGE; local DOCKER_ARGS
   IMAGE=$(get_app_image_name "$APP" "$IMAGE_TAG")
 
+  AWS_DEFAULT_REGION=$(config_get "$APP" AWS_DEFAULT_REGION || true)
   AWS_ACCESS_KEY_ID=$(config_get "$APP" AWS_ACCESS_KEY_ID || true)
   AWS_SECRET_ACCESS_KEY=$(config_get "$APP" AWS_SECRET_ACCESS_KEY || true)
 
   if [[ -n "$AWS_ACCESS_KEY_ID" ]] && [[ -n "$AWS_SECRET_ACCESS_KEY" ]]; then
     dokku_log_info1_quiet "performing ecr get-login"
     # shellcheck disable=SC2091
-    $(aws ecr get-login --no-include-email)
+    $(
+      AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION \
+      AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
+      AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
+      aws ecr get-login --no-include-email
+    )
   fi
 }
 

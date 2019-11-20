@@ -16,6 +16,7 @@ sudo pip install awscli
 # dokku 0.4+
 dokku plugin:install https://github.com/michaelshobbs/dokku-ecr-login.git
 
+dokku config:set <app> AWS_DEFAULT_REGION=some-value
 dokku config:set <app> AWS_ACCESS_KEY_ID=some-value
 dokku config:set <app> AWS_SECRET_ACCESS_KEY=some-value
 

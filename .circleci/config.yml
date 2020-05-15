@@ -1,0 +1,11 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/buildpack-deps:18.04
+    steps:
+      - checkout
+      - run: |
+          make -e ci-dependencies
+      - run: |
+          make -e lint

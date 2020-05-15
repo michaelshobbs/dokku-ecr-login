@@ -3,8 +3,7 @@ ifeq ($(shell shellcheck > /dev/null 2>&1 ; echo $$?),127)
 ifeq ($(shell uname),Darwin)
 	brew install shellcheck
 else
-	sudo add-apt-repository 'deb http://archive.ubuntu.com/ubuntu trusty-backports main restricted universe multiverse'
-	sudo apt-get update -qq && sudo apt-get install -qq -y shellcheck
+	sudo apt-get update -qq && sudo apt-get install -qq -y shellcheck software-properties-common
 endif
 endif
 
@@ -18,7 +17,9 @@ else
 endif
 endif
 
-ci-dependencies: shellcheck bats
+ci-dependencies:
+	sudo apt-get update -qq && sudo apt-get install -qq -y software-properties-common
+	$(MAKE) shellcheck bats
 
 lint:
 	@echo linting...
